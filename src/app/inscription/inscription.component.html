@@ -1,0 +1,104 @@
+<div id="page-container">
+    
+    <div id="content-wrap">
+        <header>
+            <div class="container-xxl">
+                <div class="row my-3">
+                    <div class='col-12 col-sm-4 col-xl-3 d-flex align-items-center'>
+                        <img class='img-fluid' src="../../assets/images/icon-left-font-monochrome-black.svg"></div>
+                        <!-- LOGO GROUPOMANIA -->
+                    <div class='col'></div>
+                    <div class='col-12 col-sm-auto d-flex justify-content-evenly align-items-center'>
+                        <a routerLink='/connexion'><button type="button" class="btn btn-outline-secondary fw-bold">Connexion</button></a>
+                    </div>
+                    <!-- Bouton Connexion -->
+                </div>
+            </div>
+            <div class="redbar"></div>
+            <div class="bluebar"></div>
+        </header>
+        <main class="container-sm">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-sm-12 col-md-8 mt-5 ">
+                    <h1 class=" text-center text-decoration-underline fw-bold fs-2">Inscription</h1>
+                    <form class="">
+                        <div class="mt-3">
+                            <div class="input-title-container">
+                                <label for="username"><h2 class="fs-6 fw-normal" id="usernameLabel">Nom d'utilisateur</h2></label>
+                                <div class="form-separator"></div>
+                            </div>
+                            <input class="form-control" type="text" id="username" aria-describedby="usernameLabel">
+                        </div>
+                        <div class="mt-3">
+                            <div class="input-title-container">
+                                <label for="firstname"><h2 class="fs-6 fw-normal" id="firstnameLabel">Prénom</h2></label>
+                                <div class="form-separator"></div>
+                            </div>
+                            <input class="form-control" type="text" id="firstname" aria-describedby="firstnameLabel">
+                        </div>
+                        <div class="mt-3">
+                            <div class="input-title-container">
+                                <label for="lastname"><h2 class="fs-6 fw-normal" id="lastnameLabel">Nom de famille</h2></label>
+                                <div class="form-separator"></div>
+                            </div>
+                            <input class="form-control" type="text" id="lastname" aria-describedby="lastnameLabel">
+                        </div>
+                        <div class="mt-3">
+                            <div class="input-title-container">
+                                <label for="password"><h2 class="fs-6 fw-normal" id="passwordLabel">Mot de passe</h2></label>
+                                <div class="form-separator"></div>
+                            </div>
+                            <input class="form-control" type="password" id="password" aria-describedby="passwordLabel">
+                        </div>
+                        <div class="mt-3">
+                            <div class="input-title-container">
+                                <label for="passwordConfirmation"><h2 class="fs-6 fw-normal" id="passwordConfirmationLabel">Confirmez votre mot de passe</h2></label>
+                                <div class="form-separator"></div>
+                            </div>
+                            <input class="form-control" type="password" id="passwordConfirmation" aria-describedby="passwordConfirmationLabel">
+                        </div>
+                        <div class="mt-3 input-title-container">
+                            <h2 class="fs-6 fw-normal" id="passwordConfirmationLabel">Photo de profil</h2>
+                            <div class="form-separator"></div>
+                        </div>
+                        <div class='d-flex flex-wrap justify-content-between align-items-center'>
+                            <div class="thumbnail-large">
+                                <img src="../../assets/images/Lucas.jpg">
+                            </div>
+                            <div>
+                                <input type="file" id="profilePicture" name="profilePicture" class="" accept="image/*">
+                                <label for="profilePicture" class=" d-flex align-items-center btn btn-outline-secondary form-control"><div class="">Choisir une photo</div></label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-evenly mt-3">
+                            <button type="submit" class="btn btn-red fw-bold">Valider</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+        </main>
+    </div>
+
+
+
+    <footer class="container-fluid px-0">
+        <div class="redbar"></div>
+        <div class="bluebar"></div>
+        <div class="container">
+            <div class="footer-height d-flex justify-content-evenly flex-wrap">
+                <ul class="d-flex flex-column justify-content-evenly">
+                    <li><a href="#" class="link-dark">Circa hos dies Lollianus primae lanuginis</a></li>
+                    <li><a href="#" class="link-dark">Per hoc minui studium suum existimans</a></li>
+                    <li><a href="#" class="link-dark">Post haec Gallus Hierapolim profecturus ut</a></li>
+                </ul>
+                <ul class="d-flex flex-column justify-content-evenly">
+                    <li><a href="#"  class="link-dark">Circa hos dies Lollianus primae lanuginis</a></li>
+                    <li><a href="#" class="link-dark">Per hoc minui studium suum existimans</a></li>
+                    <li><a href="#" class="link-dark">Post haec Gallus Hierapolim profecturus ut</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
