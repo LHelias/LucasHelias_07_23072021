@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +10,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 
 import {RouterModule, Routes} from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: 'inscription', component: InscriptionComponent},
@@ -22,11 +25,12 @@ const appRoutes: Routes = [
     AppComponent,
     ConnexionComponent,
     InscriptionComponent,
-    AccueilComponent
+    AccueilComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
