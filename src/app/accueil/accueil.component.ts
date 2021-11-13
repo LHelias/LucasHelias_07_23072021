@@ -19,16 +19,30 @@ export class AccueilComponent implements OnInit {
     .subscribe(
       (response) => {
         this.posts = response[0];
+        //la réponse de la première requète est la liste des posts
         this.comments = response[1];
-
+        //la réponse de la deuxième requète est la liste des commentaires.
         for (let i in this.posts){
           this.posts[i].comments = [];
+          let date = new Date(this.posts[i].creation_date);
+          this.posts[i].creation_date = date.toLocaleString("fr-FR",
+          {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'numeric', 
+            day: 'numeric',
+            hour: 'numeric', 
+            minute: 'numeric',
+            hour12: false,
+          })
+          
           for(let j in this.comments){
             if (this.comments[j].post_id == this.posts[i].post_id){
               this.posts[i].comments.push(this.comments[j])
             }
           }
         }
+        //ce code ajoute les commentaires j dans un sous tableau de leurs posts i respectifs.
         console.log(this.posts);
       },
       (error) => {
