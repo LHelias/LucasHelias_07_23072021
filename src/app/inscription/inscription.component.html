@@ -22,41 +22,41 @@
                 <div class="col"></div>
                 <div class="col-sm-12 col-md-8 mt-5 ">
                     <h1 class=" text-center text-decoration-underline fw-bold fs-2">Inscription</h1>
-                    <form action="http://localhost:3000/inscription" method="post" class="" id="inscriptionForm">
+                    <form id="inscriptionForm" (ngSubmit)="onSubmitInscription(f)" #f="ngForm">
                         <div class="mt-3">
                             <div class="input-title-container">
-                                <label for="username"><h2 class="fs-6 fw-normal" id="usernameLabel">Nom d'utilisateur</h2></label>
+                                <label for="username"><h2 class="fs-6 fw-normal" id="emailLabel">Adresse email</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="text" id="username" aria-describedby="usernameLabel">
+                            <input class="form-control" type="text" id="email" name="email" aria-describedby="emailLabel" ngModel required>
                         </div>
                         <div class="mt-3">
                             <div class="input-title-container">
                                 <label for="firstname"><h2 class="fs-6 fw-normal" id="firstnameLabel">Prénom</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="text" id="firstname" aria-describedby="firstnameLabel">
+                            <input class="form-control" type="text" id="firstname" name="firstname" aria-describedby="firstnameLabel" ngModel required>
                         </div>
                         <div class="mt-3">
                             <div class="input-title-container">
                                 <label for="lastname"><h2 class="fs-6 fw-normal" id="lastnameLabel">Nom de famille</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="text" id="lastname" aria-describedby="lastnameLabel">
+                            <input class="form-control" type="text" id="lastname" name="lastname" aria-describedby="lastnameLabel" ngModel required>
                         </div>
                         <div class="mt-3">
                             <div class="input-title-container">
                                 <label for="password"><h2 class="fs-6 fw-normal" id="passwordLabel">Mot de passe</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="password" id="password" aria-describedby="passwordLabel">
+                            <input class="form-control" type="password" id="password" name="password" aria-describedby="passwordLabel" ngModel required>
                         </div>
                         <div class="mt-3">
                             <div class="input-title-container">
                                 <label for="passwordConfirmation"><h2 class="fs-6 fw-normal" id="passwordConfirmationLabel">Confirmez votre mot de passe</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="password" id="passwordConfirmation" aria-describedby="passwordConfirmationLabel">
+                            <input class="form-control" type="password" id="passwordConfirmation" name="passwordConfirmation" aria-describedby="passwordConfirmationLabel" ngModel required>
                         </div>
                         <div class="mt-3 input-title-container">
                             <h2 class="fs-6 fw-normal">Photo de profil</h2>
@@ -67,12 +67,12 @@
                                 <img src="../../assets/images/Lucas.jpg">
                             </div>
                             <div>
-                                <input type="file" id="profilePicture" name="profilePicture" class="" accept="image/*">
+                                <input type="file" id="profilePicture" name="profilePicture" class="" accept="image/*" ngModel>
                                 <label for="profilePicture" class=" d-flex align-items-center btn btn-outline-secondary form-control"><div class="">Choisir une photo</div></label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-evenly mt-3">
-                            <button type="submit" class="btn btn-red fw-bold" onClick="this.form.submit()">Valider</button>
+                            <button type="submit" class="btn btn-red fw-bold" [disabled]="f.invalid">Valider</button>
                         </div>
                     </form>
                 </div>

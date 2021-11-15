@@ -22,11 +22,21 @@ exports.getAll = (req, res, next) => {
             console.log("comments:", results[1])
             
         }
-    });
-    
+    });    
 };
 
-// SELECT * FROM comments WHERE post.post_id = comment.post_id ORDER BY comment.creation_date;
-// exports.createPost = (req, res, next) => {
-    
-// }
+exports.createNewPost = (req, res, next) => {
+    sql.query("INSERT INTO post SET ?", newPost, (error, results, fields) => {
+        if (error){
+            console.log("error: ", error);
+            res.status(500).send({
+                message: error.sqlMessage
+            });
+            return;
+        } else {
+            res.send(results);
+            console.log(results)
+            console.log("created post: ", { ...newPost});
+        }
+    });
+}

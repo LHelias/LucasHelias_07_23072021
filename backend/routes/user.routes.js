@@ -7,7 +7,7 @@ router.get("/connexion", auth, userCtrl.getAll);
 
 router.post("/connexion", userCtrl.login);
 
-router.post("/inscription", auth, userCtrl.createOne);
+router.post("/inscription", userCtrl.createOne);
 
 router.get("/profil/:email", auth, userCtrl.getUserProfile);
 

@@ -28,7 +28,7 @@ export class ConnexionComponent implements OnInit {
         console.log("Erreur : " + error);
       }
     );
-     
+
   };
 
 

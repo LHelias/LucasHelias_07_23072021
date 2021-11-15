@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken")
 
 exports.createOne = (req, res, next) => {
   var newUserObject = req.body;
-  console.log("type of newUserObject: ", typeof(newUserObject));
+  newUserObject.email = newUserObject.email.toLowerCase(); // transforme les majuscules de l'adresse email en minuscules.
+
   console.log("newUserObject: ", newUserObject.email)
   var newUser = {
     email: newUserObject.email,
