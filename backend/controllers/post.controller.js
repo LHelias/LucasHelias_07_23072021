@@ -8,7 +8,7 @@ const { getAllComments } = require("./comment.controller");
 exports.getAll = (req, res, next) => {
     let posts = [];
     let comments = [];
-    sql.query("SELECT * FROM post ORDER BY post.creation_date; SELECT `comment`.*, `user`.`firstname`, `user`.`lastname` FROM `comment` LEFT JOIN `user` ON `comment`.`user_id` = `user`.`email`;", (error, results) => {
+    sql.query("SELECT `post`.*, `user`.`firstname`, `user`.`lastname` FROM `post` LEFT JOIN `user` ON `post`.`user_id` = `user`.`email` ORDER BY post.creation_date; SELECT `comment`.*, `user`.`firstname`, `user`.`lastname` FROM `comment` LEFT JOIN `user` ON `comment`.`user_id` = `user`.`email`;", (error, results) => {
         if (error) {
             res.send(error);
             res.status(500);  

@@ -35,7 +35,7 @@ export class AccueilComponent implements OnInit {
             minute: 'numeric',
             hour12: false,
           })
-          
+          //on profite de cette boucle sur les posts pour formater la date des posts
           for(let j in this.comments){
             if (this.comments[j].post_id == this.posts[i].post_id){
               this.posts[i].comments.push(this.comments[j])
