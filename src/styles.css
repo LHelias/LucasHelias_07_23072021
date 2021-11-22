@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+ /* You can add global styles to this file, and also import other style files */
+.zoom {
+    zoom: 80%;
+} 
+
+#page-container{
+    position: relative;
+    min-height: 123vh!important;
+}

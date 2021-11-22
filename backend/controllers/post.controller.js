@@ -8,7 +8,8 @@ const { getAllComments } = require("./comment.controller");
 exports.getAll = (req, res, next) => {
     let posts = [];
     let comments = [];
-    sql.query("SELECT `post`.*, `user`.`firstname`, `user`.`lastname` FROM `post` LEFT JOIN `user` ON `post`.`user_id` = `user`.`email` ORDER BY post.creation_date; SELECT `comment`.*, `user`.`firstname`, `user`.`lastname` FROM `comment` LEFT JOIN `user` ON `comment`.`user_id` = `user`.`email`;", (error, results) => {
+    let user = [];
+    sql.query("SELECT `post`.*, `user`.`firstname`, `user`.`lastname` FROM `post` LEFT JOIN `user` ON `post`.`user_id` = `user`.`email` ORDER BY post.creation_date; SELECT `comment`.*, `user`.`firstname`, `user`.`lastname` FROM `comment` LEFT JOIN `user` ON `comment`.`user_id` = `user`.`email` ORDER BY comment.creation_date; SELECT * FROM user WHERE email = ?",req.query.email, (error, results) => {
         if (error) {
             res.send(error);
             res.status(500);  
@@ -18,6 +19,7 @@ exports.getAll = (req, res, next) => {
             console.log("results: ", results)
             posts = results[0];
             comments = results[1];
+            user = results[2][0];
             console.log("posts: ", results[0]);
             console.log("comments:", results[1])
             
@@ -26,6 +28,9 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.createNewPost = (req, res, next) => {
+    const newPost = req.body;
+    console.log(newPost);
+
     sql.query("INSERT INTO post SET ?", newPost, (error, results, fields) => {
         if (error){
             console.log("error: ", error);

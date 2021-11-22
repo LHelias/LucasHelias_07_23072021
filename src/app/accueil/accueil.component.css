@@ -192,3 +192,20 @@ footer{
     border-radius: 0.3em;
 }
 
+.textcontent{
+    resize: none;
+    min-width: 200px;
+    transition-property: height;
+    transition-duration: 400ms;
+}
+
+.textcontent:focus{
+    height: 160px;
+    transition-property: height;
+    transition-duration: 400ms;
+}
+
+.commentbox-height{
+    height: 40px;
+    padding: O.5em!important;
+}

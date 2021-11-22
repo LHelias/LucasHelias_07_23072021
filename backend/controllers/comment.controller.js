@@ -14,3 +14,15 @@ exports.getAllComments = (req, res, next) => {
         }
     });
 };
+
+exports.addOneComment = (req, res, next) => {    
+    sql.query("INSERT INTO comment VALUES (CURRENT_TIMESTAMP, ?, ?, ?);", [req.body.email, req.body.post_id, req.body.textcontent] , (error,results) => {
+        if (error) {
+            res.status(500)
+            res.send(error.message);
+        } else {
+            res.status(201)
+            res.send(results);
+        }
+    });
+};

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-connexion',
@@ -8,8 +10,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./connexion.component.css']
 })
 export class ConnexionComponent implements OnInit {
+  email: string = "";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,13 +26,15 @@ export class ConnexionComponent implements OnInit {
       (response : any) => {
         localStorage.jwt_token = response.token;
         console.log("Connexion OK !");
+        localStorage.email = form.value.email;
+        this.router.navigate([`/accueil`]);
       },
       (error) => {
-        console.log("Erreur : " + error);
+        console.log("Erreur : " + error.message);
       }
     );
-
   };
 
+  
 
 };

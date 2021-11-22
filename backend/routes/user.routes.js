@@ -11,6 +11,8 @@ router.post("/inscription", userCtrl.createOne);
 
 router.get("/profil/:email", auth, userCtrl.getUserProfile);
 
+// router.get("/accueil", userCtrl.getUserProfile);
+
 router.put("/profil/:email", auth, userCtrl.modifyUserProfile);
 
 module.exports = router;

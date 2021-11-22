@@ -10,7 +10,7 @@
                     <!-- LOGO GROUPOMANIA -->
                     <div class='col'></div>
                     <div class='col-12 col-sm-auto d-flex justify-content-evenly align-items-center flex-wrap'>
-                        <span class="mx-3 fw-bold">Super User</span>
+                        <span class="mx-3 fw-bold">{{user.firstname}} {{user.lastname}}</span>
                         <div class="thumbnail-small mx-3">
                             <img src="../../assets/images/Lucas.jpg">
                         </div>
@@ -60,12 +60,18 @@
                 <div class="textbox textcontent">
                 {{post.textcontent}}
                 </div>
-                <div class="">
+                <div class="d-flex flex-column flex-wrap">
                     <span class="fw-bold">{{post.comments.length}} Commentaires :</span>
                     <div class="d-flex align-items-center mb-1" *ngFor="let comment of post.comments">
                         <div class="me-3 nowrap fw-bold">{{comment.firstname}} {{comment.lastname}}</div>
                         <div class="textbox flex-fill">{{comment.textcontent}}</div>
                     </div>
+
+                    <form (ngSubmit)="onSubmitComment(f)" #f="ngForm" class="input-group ">
+                        <textarea class="form-control textcontent commentbox-height border" type="text" name="comment" aria-describedby="commentLabel" placeholder="Répondez à {{post.firstname}}" ngModel required></textarea>
+                        <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Commenter</button>
+                        <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
+                    </form>
                 </div>
             </section>
 

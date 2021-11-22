@@ -6,9 +6,9 @@ const jwt = require("jsonwebtoken")
 
 exports.createOne = (req, res, next) => {
   var newUserObject = req.body;
+
   newUserObject.email = newUserObject.email.toLowerCase(); // transforme les majuscules de l'adresse email en minuscules.
 
-  console.log("newUserObject: ", newUserObject.email)
   var newUser = {
     email: newUserObject.email,
     password: newUserObject.password,
@@ -57,6 +57,7 @@ exports.login = (req, res, next) => {
       })
     }
     else {
+      console.log(results)
       console.log("results[0]: ",results[0].password);
       if (req.body.password == results[0].password) {
         // res.send({
@@ -74,15 +75,15 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUserProfile = (req, res, next) => {
-  console.log(req.params.email)
-  sql.query("SELECT * FROM user WHERE email = ?" , req.params.email, (error, results) =>{
+  console.log(JSON.stringify.req.query.email);
+  sql.query("SELECT * FROM user WHERE email = ?" , req.query.email, (error, results) =>{
     if (error) {
       res.status(500);
-      console.log("error getOne: ", error)
+      console.log("error getUserProfile: ", error)
       
     } else { 
       res.status(201);
-      res.send(results[0]);
+      res.send(results);
     }
   })
 }
@@ -105,7 +106,7 @@ exports.modifyUserProfile = (req, res, next) => {
     else {
       console.log("updated user: ", results)
       res.status(201)
-      res.send(results)
+      res.send(results);
     }
   });
 }

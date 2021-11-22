@@ -4,8 +4,8 @@ const postCtrl = require('../controllers/post.controller');
 const auth = require('../middleware/auth');
 
 
-router.get("/accueil",postCtrl.getAll);
+router.get("/accueil", auth, postCtrl.getAll);
 
-router.post("/inscription", postCtrl.createOne);
+// router.post("/inscription", postCtrl.createOne);
 
 module.exports = router;
