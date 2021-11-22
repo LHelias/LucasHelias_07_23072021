@@ -3,24 +3,28 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
-
+import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NgModule } from '@angular/core';
 
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
-  styleUrls: ['./accueil.component.css']
+  styleUrls: ['./accueil.component.css'],
 })
+
 export class AccueilComponent implements OnInit {
+  editIcon = faEdit;
+  deleteIcon = faTimes;
+  commentIsMine: boolean = false;
+
   posts : any = [];
   comments : any = [];
   user : any = [];
-
+  
   constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute) { }
   
   parameters = new HttpParams().set('email', localStorage.email);
   //définit un paramêtre de requète pour la requête GET (ici l'email)
-  
 
   ngOnInit(): void {
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
@@ -50,12 +54,24 @@ export class AccueilComponent implements OnInit {
           //on profite de cette boucle sur les posts pour formater la date des posts
           for(let j in this.comments){
             if (this.comments[j].post_id == this.posts[i].post_id){
-              this.posts[i].comments.push(this.comments[j])
+              this.posts[i].comments.push(this.comments[j])//ce code ajoute les commentaires j dans un sous tableau de leurs posts i respectifs.
             }
           }
+
+          for (let k in this.posts[i].comments) {
+            if (this.posts[i].comments[k].user_id == this.user.email) {
+              console.log("COUCOU !!!")
+              console.log(this.posts[i].comments[k])
+              this.posts[i].comments[k].commentIsMine = true;
+              
+              // this.posts[i].comments[k].push(this.commentIsMine);
+            } 
+          }
+
         }
-        //ce code ajoute les commentaires j dans un sous tableau de leurs posts i respectifs.
-        console.log(this.posts);
+        
+        // console.log(this.posts);
+
       },
       (error) => {
         console.log('erreur : ' + error.message);
@@ -81,4 +97,23 @@ export class AccueilComponent implements OnInit {
       }
     )
   }
+
+  onEditComment(form: NgForm){
+    var editCommentForm = {
+      textcontent: form.value.editedComment,
+      creation_date: form.value.creation_date
+    };
+
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.put('http://localhost:3000/accueil', editCommentForm, {headers})
+    .subscribe(
+      (response:any) => {
+        console.log("commentaire édité");
+        location.reload();
+      }, (error) => {
+        console.log("Erreur : " + error.message);
+      }
+    )
+  }
+
 }

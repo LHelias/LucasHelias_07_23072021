@@ -26,3 +26,24 @@ exports.addOneComment = (req, res, next) => {
         }
     });
 };
+
+exports.editComment = (req, res, next) => {
+    console.log("COUCOU")
+    console.log(req.body.creation_date)
+    commentDate = new Date (req.body.creation_date);
+    commentDate = commentDate.toISOString().split('T')[0]+' '+commentDate.toTimeString().split(' ')[0]
+
+    console.log("commentDate: ", commentDate);
+    console.log("req.body: ", req.body.textcontent);
+    let textcontent= req.body.textcontent;
+
+    sql.query("UPDATE comment SET textcontent = ? WHERE comment.creation_date = ? ;", [ textcontent, commentDate], (error,results, fields) => {
+        if (error) {
+            res.status(500)
+            res.send(error.message);
+        } else {
+            res.status(200)
+            res.send(results);
+        }
+    });
+}

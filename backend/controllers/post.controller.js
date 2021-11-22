@@ -20,8 +20,8 @@ exports.getAll = (req, res, next) => {
             posts = results[0];
             comments = results[1];
             user = results[2][0];
-            console.log("posts: ", results[0]);
-            console.log("comments:", results[1])
+            // console.log("posts: ", results[0]);
+            // console.log("comments:", results[1]);
             
         }
     });    
@@ -42,6 +42,22 @@ exports.createNewPost = (req, res, next) => {
             res.send(results);
             console.log(results)
             console.log("created post: ", { ...newPost});
+        }
+    });
+}
+
+exports.deleteOnePost = (req, res, next) => {
+    sql.query ("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.body.creation_date, req.body.post_id], (error, results, fields) => {
+        if (error){
+            console.log("error: ", error);
+            res.status(500).send({
+                message: error.sqlMessage
+            });
+            return;
+        } else {
+            res.send(results);
+            console.log(results)
+            console.log("deleted post");
         }
     });
 }
