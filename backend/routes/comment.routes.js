@@ -10,5 +10,7 @@ router.post("/accueil", commentCtrl.addOneComment);
 
 router.put("/accueil", auth, commentCtrl.editComment);
 
+router.delete("/accueil", commentCtrl.deleteOneComment);
+
 
 module.exports = router;

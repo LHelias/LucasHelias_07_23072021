@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgModule } from '@angular/core';
 
+
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
@@ -17,14 +18,28 @@ export class AccueilComponent implements OnInit {
   deleteIcon = faTimes;
   commentIsMine: boolean = false;
 
+
   posts : any = [];
   comments : any = [];
   user : any = [];
+  commentEditModalBody: any =[];
   
+
   constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute) { }
   
   parameters = new HttpParams().set('email', localStorage.email);
   //définit un paramêtre de requète pour la requête GET (ici l'email)
+
+  frenchFormatter = new Intl.DateTimeFormat("fr-FR",
+  {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'numeric', 
+    day: 'numeric',
+    hour: 'numeric', 
+    minute: 'numeric',
+    hour12: false,
+  });
 
   ngOnInit(): void {
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
@@ -41,17 +56,19 @@ export class AccueilComponent implements OnInit {
         for (let i in this.posts){
           this.posts[i].comments = [];
           let date = new Date(this.posts[i].creation_date);
-          this.posts[i].creation_date = date.toLocaleString("fr-FR",
-          {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'numeric', 
-            day: 'numeric',
-            hour: 'numeric', 
-            minute: 'numeric',
-            hour12: false,
-          })
+           
+          var date_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+
+
+          console.log(date);
+          console.log(new Date(date_utc));
+
+          // console.log(date.toISOString().split('T')[0]+' '+date.toTimeString().split(' ')[0]);
+          this.posts[i].creation_date = date_utc;
+
           //on profite de cette boucle sur les posts pour formater la date des posts
+
           for(let j in this.comments){
             if (this.comments[j].post_id == this.posts[i].post_id){
               this.posts[i].comments.push(this.comments[j])//ce code ajoute les commentaires j dans un sous tableau de leurs posts i respectifs.
@@ -63,14 +80,13 @@ export class AccueilComponent implements OnInit {
               console.log("COUCOU !!!")
               console.log(this.posts[i].comments[k])
               this.posts[i].comments[k].commentIsMine = true;
-              
               // this.posts[i].comments[k].push(this.commentIsMine);
             } 
           }
 
         }
         
-        // console.log(this.posts);
+        console.log("Posts traités :",this.posts);
 
       },
       (error) => {
@@ -103,7 +119,7 @@ export class AccueilComponent implements OnInit {
       textcontent: form.value.editedComment,
       creation_date: form.value.creation_date
     };
-
+  
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
     this.httpClient.put('http://localhost:3000/accueil', editCommentForm, {headers})
     .subscribe(
@@ -114,6 +130,28 @@ export class AccueilComponent implements OnInit {
         console.log("Erreur : " + error.message);
       }
     )
-  }
+  };
 
-}
+  onDeleteComment(form: NgForm){
+    console.log("form.value :" ,form.value)
+    let url = 'http://localhost:3000/accueil?postId={0}&userId={1}';
+    url = url.replace('{0}', 'ma_valeur');
+    this.httpClient.request('delete', url, form.value)
+    .subscribe(
+      (response:any) => {
+        console.log("commentaire supprimé")
+      }, (error) => {
+        console.log("Erreur : " + error.message);
+      }
+    )
+  };
+
+
+  onEditModal(i:number,j:number){
+    console.log("onEditModal: ",this.posts[i].comments[j]);
+    this.commentEditModalBody.textcontent = this.posts[i].comments[j].textcontent;
+    this.commentEditModalBody.post_id = this.posts[i].post_id;
+    this.commentEditModalBody.creation_date = this.posts[i].comments[j].creation_date;
+    this.commentEditModalBody.user_id = this.posts[i].comments[j].user_id;
+  }
+};

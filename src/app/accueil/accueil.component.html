@@ -44,7 +44,7 @@
                     <div class="thumbnail-tiny border border-secondary">
                         <img src="../../assets/images/jean-paul-rouve.jpg">
                     </div>
-                    <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{post.creation_date}}</span></h2>
+                    <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{frenchFormatter.format(post.creation_date)}}</span></h2>
                     
                 </div>
                 <div align="center" class="col">
@@ -65,23 +65,24 @@
                     <div class="d-flex align-items-center mb-1" *ngFor="let comment of post.comments; index as j">
                         <div class="me-3 nowrap fw-bold">{{comment.firstname}} {{comment.lastname}}</div>
                         <div class="textbox flex-fill" id="commentaire">{{comment.textcontent}}</div>
-                        <fa-icon *ngIf="comment.commentIsMine" [icon]="editIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#editedCommentModal'+ i + j"></fa-icon>
-                        <fa-icon *ngIf="comment.commentIsMine" [icon]="deleteIcon" class="ms-1"></fa-icon>
+                        <fa-icon *ngIf="comment.commentIsMine" [icon]="editIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#editedCommentModal'" (click)="onEditModal(i,j)"></fa-icon>
+                        <fa-icon *ngIf="comment.commentIsMine" [icon]="deleteIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteCommentModal'+ i + j"></fa-icon>
                         
-                        <!-- Modal -->
-                        <div *ngIf="comment.commentIsMine" class="modal fade" id="editedCommentModal{{i}}{{j}}" tabindex="-1" aria-labelledby="editedCommentLabel{{comment.creation_date}" aria-hidden="true">
+                        <!-- Modal pour l'édition des commentaires -->
+                        <!-- <div *ngIf="posts[i].comments[j].commentIsMine" class="modal fade" id="editedCommentModal" tabindex="-1" aria-labelledby="editedCommentLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="editedCommentLabel" >Éditer commentaire{{comment.creation_date}}</h5>
+                                  <h5 class="modal-title" id="editedCommentLabel" >Éditer commentaire</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" id="editedCommentModalBody">
                                     <form (ngSubmit)="onEditComment(f)" #f="ngForm" class="input-group ">
-                                        <textarea class="form-control height-200" type="text" name="editedComment" aria-describedby="editedCommentLabel" ngModel={{comment.textcontent}} required></textarea>
+                                        <textarea class="form-control height-200" type="text" name="editedComment" aria-describedby="editedCommentLabel" ngModel={{posts[j].comments[i].textcontent}} required></textarea>
                                         <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Valider</button>
-                                        <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
-                                        <div name="creation_date" ngDefaultControl ngModel="{{comment.creation_date}}"></div>
+                                        <div name="post_id" ngDefaultControl ngModel="{{posts[i].post_id}}"></div>
+                                        <div name="creation_date" ngDefaultControl ngModel="{{posts[i].comments[j].creation_date}}"></div>
+                                        <div name="user_id" ngDefaultControl ngModel="{{posts[i].comments[j].user_id}}"></div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -89,7 +90,29 @@
                                 </div>
                               </div>
                             </div>
+                        </div> -->
+
+                        <!-- Modal pour la suppression des commentaires -->
+                        <div *ngIf="comment.commentIsMine" class="modal fade" id="deleteCommentModal{{i}}{{j}}" tabindex="-1" aria-labelledby="deleteCommentLabel{{comment.creation_date}" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="deletedCommentLabel{{i}}{{j}}" >Etes-vous sur de vouloir supprimer ce commentaire ?</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                    <form (ngSubmit)="onDeleteComment(f)" #f="ngForm" class="input-group ">
+                                        <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
+                                        <div name="creation_date" ngDefaultControl ngModel="{{comment.creation_date}}"></div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger"> Supprimer commentaire</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        </div>
+                                    </form>
+                                  
+                              </div>
+                            </div>
                         </div>
+                        
 
                     </div>
 
@@ -100,6 +123,29 @@
                     </form>
                 </div>
             </section>
+
+            <div class="modal fade" id="editedCommentModal" tabindex="-1" aria-labelledby="editedCommentLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editedCommentLabel" >Éditer commentaire</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="editedCommentModalBody">
+                        <form (ngSubmit)="onEditComment(f)" #f="ngForm" class="input-group ">
+                            <textarea class="form-control height-200" type="text" name="editedComment" aria-describedby="editedCommentLabel" ngModel={{this.commentEditModalBody.textcontent}} required></textarea>
+                            <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Valider</button>
+                            <div name="post_id" ngDefaultControl ngModel="{{this.commentEditModalBody.post_id}}"></div>
+                            <div name="creation_date" ngDefaultControl ngModel="{{this.commentEditModalBody.creation_date}}"></div>
+                            <div name="user_id" ngDefaultControl ngModel="{{this.commentEditModalBody.user_id}}"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
 
         </main>
     </div>
