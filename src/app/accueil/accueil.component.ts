@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgModule } from '@angular/core';
-
+import { style } from '@angular/animations';
+declare var $: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-accueil',
@@ -13,16 +15,17 @@ import { NgModule } from '@angular/core';
   styleUrls: ['./accueil.component.css'],
 })
 
+
+
 export class AccueilComponent implements OnInit {
   editIcon = faEdit;
   deleteIcon = faTimes;
   commentIsMine: boolean = false;
-
-
   posts : any = [];
   comments : any = [];
   user : any = [];
-  commentEditModalBody: any =[];
+  commentEditModalBody: any = [];
+  commentDeleteModalBody: any = [];
   
 
   constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute) { }
@@ -56,15 +59,8 @@ export class AccueilComponent implements OnInit {
         for (let i in this.posts){
           this.posts[i].comments = [];
           let date = new Date(this.posts[i].creation_date);
-           
           var date_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
           date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-
-
-          console.log(date);
-          console.log(new Date(date_utc));
-
-          // console.log(date.toISOString().split('T')[0]+' '+date.toTimeString().split(' ')[0]);
           this.posts[i].creation_date = date_utc;
 
           //on profite de cette boucle sur les posts pour formater la date des posts
@@ -77,10 +73,7 @@ export class AccueilComponent implements OnInit {
 
           for (let k in this.posts[i].comments) {
             if (this.posts[i].comments[k].user_id == this.user.email) {
-              console.log("COUCOU !!!")
-              console.log(this.posts[i].comments[k])
               this.posts[i].comments[k].commentIsMine = true;
-              // this.posts[i].comments[k].push(this.commentIsMine);
             } 
           }
 
@@ -93,6 +86,7 @@ export class AccueilComponent implements OnInit {
         console.log('erreur : ' + error.message);
       }
     )
+
   }
 
   onSubmitComment(form: NgForm){
@@ -126,20 +120,21 @@ export class AccueilComponent implements OnInit {
       (response:any) => {
         console.log("commentaire édité");
         location.reload();
+
       }, (error) => {
         console.log("Erreur : " + error.message);
       }
     )
   };
 
-  onDeleteComment(form: NgForm){
-    console.log("form.value :" ,form.value)
-    let url = 'http://localhost:3000/accueil?postId={0}&userId={1}';
-    url = url.replace('{0}', 'ma_valeur');
+  onDeleteComment(form: NgForm,i:number,j:number){
+    let url = 'http://localhost:3000/accueil?postId={0}&creation_date={1}';
+    url = url.replace('{0}', form.value.post_id).replace('{1}', form.value.creation_date);
     this.httpClient.request('delete', url, form.value)
     .subscribe(
       (response:any) => {
-        console.log("commentaire supprimé")
+        console.log("commentaire supprimé :", this.posts[i].comments[j]);
+        this.posts[i].comments.splice(j,1);//supprime le commentaire de la liste des commentaires en front-end.
       }, (error) => {
         console.log("Erreur : " + error.message);
       }
@@ -154,4 +149,19 @@ export class AccueilComponent implements OnInit {
     this.commentEditModalBody.creation_date = this.posts[i].comments[j].creation_date;
     this.commentEditModalBody.user_id = this.posts[i].comments[j].user_id;
   }
+
+  onDeleteModal(i:number,j:number){
+    console.log("onDeleteModal: ", this.posts[i].comments[j]);
+    this.commentDeleteModalBody.post_id = this.posts[i].comments[j].post_id;
+    this.commentDeleteModalBody.creation_date = this.posts[i].comments[j].creation_date;
+    this.commentDeleteModalBody.post_index = i;
+    this.commentDeleteModalBody.comment_index = j;
+  }
+
+  closeModal(myModalId:string) {
+    $('#'+myModalId).modal('hide');
+}
+
+
+  
 };

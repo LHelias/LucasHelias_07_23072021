@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+declare var $: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-root',
@@ -9,4 +11,6 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 export class AppComponent {
   title = 'Groupomania';
   coffeeIcon = faCoffee;
+
+  
 }

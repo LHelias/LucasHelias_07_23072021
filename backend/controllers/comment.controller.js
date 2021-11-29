@@ -1,5 +1,6 @@
 const sql = require("../models/db");
 const moment = require('moment');
+const { Console } = require("console");
 
 
 exports.getAllComments = (req, res, next) => {
@@ -30,14 +31,8 @@ exports.addOneComment = (req, res, next) => {
 };
 
 exports.editComment = (req, res, next) => {
-    console.log("COUCOU")
-    console.log(req.body.creation_date)
     date = req.body.creation_date;
     date = moment(date).format('YYYY-MM-DD HH:mm:ss');
-    
-    // commentDate = commentDate.toISOString().split('T')[0]+' '+commentDate.toTimeString().split(' ')[0];
-    // commentDate = commentDate.toISOString().slice(0, 19).replace('T', ' ');
-   
     console.log("commentDate: ", date);
     console.log("req.body: ", req.body.textcontent);
     let textcontent= req.body.textcontent;
@@ -54,8 +49,12 @@ exports.editComment = (req, res, next) => {
 }
 
 exports.deleteOneComment = (req, res, next) => {
+    console.log("req.query : ", req.query);
     
-    sql.query ("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.body.creation_date, req.body.post_id], (error, results, fields) => {
+    req.query.creation_date = moment(req.query.creation_date).format('YYYY-MM-DD HH:mm:ss');
+
+    console.log("req.query formatté ", req.query.postId);
+    sql.query ("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.query.creation_date, req.query.postId], (error, results, fields) => {
         if (error){
             console.log("error: ", error);
             res.status(500).send({

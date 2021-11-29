@@ -13,6 +13,8 @@ import {RouterModule, Routes} from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
 import { FormsModule } from '@angular/forms';
 
+
+
 const appRoutes: Routes = [
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
