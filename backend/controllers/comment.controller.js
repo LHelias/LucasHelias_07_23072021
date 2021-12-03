@@ -50,10 +50,8 @@ exports.editComment = (req, res, next) => {
 
 exports.deleteOneComment = (req, res, next) => {
     console.log("req.query : ", req.query);
-    
     req.query.creation_date = moment(req.query.creation_date).format('YYYY-MM-DD HH:mm:ss');
 
-    console.log("req.query formatté ", req.query.postId);
     sql.query ("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.query.creation_date, req.query.postId], (error, results, fields) => {
         if (error){
             console.log("error: ", error);

@@ -12,14 +12,15 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import {RouterModule, Routes} from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
 import { FormsModule } from '@angular/forms';
-
-
+import { NouveauPostComponent } from './nouveau-post/nouveau-post.component';
+import { DeletePostModalComponent } from './delete-post-modal/delete-post-modal.component';
 
 const appRoutes: Routes = [
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
   { path: 'accueil', component: AccueilComponent},
-  { path: '', component: ConnexionComponent}
+  { path: 'nouveau-post', component: NouveauPostComponent},
+  { path: '**', redirectTo: 'connexion'}
 ];
 
 
@@ -29,6 +30,8 @@ const appRoutes: Routes = [
     ConnexionComponent,
     InscriptionComponent,
     AccueilComponent,
+    NouveauPostComponent,
+    DeletePostModalComponent,
   ],
   imports: [
     BrowserModule,

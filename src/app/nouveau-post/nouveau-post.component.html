@@ -1,0 +1,84 @@
+<div id="page-container">
+
+    <div id="content-wrap">
+        <header>
+            <div class="container-xxl">
+                <div class="row my-3">
+                    <div class='col-12 col-sm-4 col-xl-3 d-flex align-items-center'>
+                        <img class='img-fluid' src="../../assets/images/icon-left-font-monochrome-black.svg"
+                            alt="logo Groupomania">
+                    </div>
+                    <!-- LOGO GROUPOMANIA -->
+                    <div class='col'></div>
+                    <div class='col-12 col-sm-auto d-flex justify-content-evenly align-items-center flex-wrap'>
+                        <span class="mx-3 fw-bold">{{user.firstname}} {{user.lastname}}</span>
+                        <div class="thumbnail-small mx-3">
+                            <img src="../../assets/images/Lucas.jpg">
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle fw-bold" type="button"
+                                id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Menu
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li><a routerLink="/nouveau-post"><button class="dropdown-item hover-blue fw-bold"
+                                            type="button">Nouvelle
+                                            publication</button></a></li>
+                                <li><button class="dropdown-item" type="button">Mon Profil</button></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><button class="dropdown-item hover-red" type="button"><a
+                                            routerLink="/connexion">Deconnexion</a></button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Bouton Connexion -->
+                </div>
+            </div>
+            <div class="redbar"></div>
+            <div class="bluebar"></div>
+        </header>
+
+        <main class="container-md">
+
+            <div class="mt-5">
+                <h1 class=" text-center text-decoration-underline fw-bold fs-2">Nouvelle publication</h1>
+                <form (ngSubmit)="onNewPost(newPostForm)" #newPostForm="ngForm" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Votre publication :</label>
+                        <textarea class="form-control height-200" id="exampleFormControlTextarea1" rows="3"  name="textcontent" ngModel></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Voulez-vous ajouter une video ? Insérez son adresse ici.</label>
+                        <input type="url" class="form-control" id="exampleFormControlInput1" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" name="video_url" ngModel>
+                            <div class="d-flex justify-content-evenly mt-3">
+                                <button type="submit" class="btn btn-red fw-bold" [disabled]="newPostForm.invalid">Publier</button>
+                            </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="container-fluid px-0">
+        <div class="redbar"></div>
+        <div class="bluebar"></div>
+        <div class="container">
+            <div class="footer-height d-flex justify-content-evenly flex-wrap">
+                <ul class="d-flex flex-column justify-content-evenly">
+                    <li><a href="#" class="link-dark">Circa hos dies Lollianus primae lanuginis</a></li>
+                    <li><a href="#" class="link-dark">Per hoc minui studium suum existimans</a></li>
+                    <li><a href="#" class="link-dark">Post haec Gallus Hierapolim profecturus ut</a></li>
+                </ul>
+                <ul class="d-flex flex-column justify-content-evenly">
+                    <li><a href="#" class="link-dark">Circa hos dies Lollianus primae lanuginis</a></li>
+                    <li><a href="#" class="link-dark">Per hoc minui studium suum existimans</a></li>
+                    <li><a href="#" class="link-dark">Post haec Gallus Hierapolim profecturus ut</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgModule } from '@angular/core';
 import { style } from '@angular/animations';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 declare var $: any;
 declare var jQuery: any;
 
@@ -21,14 +23,16 @@ export class AccueilComponent implements OnInit {
   editIcon = faEdit;
   deleteIcon = faTimes;
   commentIsMine: boolean = false;
+  postIsMine: boolean = false;
   posts : any = [];
   comments : any = [];
   user : any = [];
   commentEditModalBody: any = [];
   commentDeleteModalBody: any = [];
+  url: string = "https://angular.io/api/router/RouterLink";
+  urlSafe: SafeResourceUrl = "";
   
-
-  constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute) { }
+  constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
   
   parameters = new HttpParams().set('email', localStorage.email);
   //définit un paramêtre de requète pour la requête GET (ici l'email)
@@ -55,9 +59,18 @@ export class AccueilComponent implements OnInit {
         this.comments = response[1];
         //la réponse de la deuxième requète est la liste des commentaires.
         this.user = response[2][0];
+        delete this.user["password"];
+        localStorage.user=JSON.stringify(this.user);
 
         for (let i in this.posts){
           this.posts[i].comments = [];
+
+          this.posts[i].video_url_safe = this.sanitizer.bypassSecurityTrustResourceUrl(this.posts[i].video_url);
+
+          if(this.posts[i].user_id == this.user.email) {
+            this.posts[i].postIsMine = true;
+          };
+
           let date = new Date(this.posts[i].creation_date);
           var date_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
           date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
@@ -161,7 +174,6 @@ export class AccueilComponent implements OnInit {
   closeModal(myModalId:string) {
     $('#'+myModalId).modal('hide');
 }
-
-
   
+
 };

@@ -5,7 +5,7 @@
             <div class="container-xxl">
                 <div class="row my-3">
                     <div class='col-12 col-sm-4 col-xl-3 d-flex align-items-center'>
-                        <img class='img-fluid' src="../../assets/images/icon-left-font-monochrome-black.svg">
+                        <img class='img-fluid' src="../../assets/images/icon-left-font-monochrome-black.svg" alt="logo Groupomania">
                     </div>
                     <!-- LOGO GROUPOMANIA -->
                     <div class='col'></div>
@@ -20,8 +20,8 @@
                                 Menu
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><button class="dropdown-item hover-blue fw-bold" type="button">Nouvelle
-                                        publication</button></li>
+                                <li><a routerLink="/nouveau-post"><button class="dropdown-item hover-blue fw-bold" type="button">Nouvelle
+                                        publication</button></a></li>
                                 <li><button class="dropdown-item" type="button">Mon Profil</button></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -45,16 +45,11 @@
                         <img src="../../assets/images/jean-paul-rouve.jpg">
                     </div>
                     <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{frenchFormatter.format(post.creation_date)}}</span></h2>
-                    
+                    <app-delete-post-modal *ngIf="post.postIsMine" post="post"></app-delete-post-modal>
                 </div>
                 <div align="center" class="col">
                     <div class="container-iframe" *ngIf="post.video_url">
-                        <iframe class="responsive-iframe" src={{post.video_url}}
-                        allowfullscreen="allowfullscreen"
-                        mozallowfullscreen="mozallowfullscreen"
-                        msallowfullscreen="msallowfullscreen"
-                        oallowfullscreen="oallowfullscreen"
-                        webkitallowfullscreen="webkitallowfullscreen"></iframe>
+                        <iframe class="responsive-iframe" *ngIf="post.video_url" [src]="post.video_url_safe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="textbox textcontent">
@@ -67,54 +62,7 @@
                         <div class="textbox flex-fill" id="commentaire">{{comment.textcontent}}</div>
                         <fa-icon *ngIf="comment.commentIsMine" [icon]="editIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#editedCommentModal'" (click)="onEditModal(i,j)"></fa-icon>
                         <fa-icon *ngIf="comment.commentIsMine" [icon]="deleteIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteCommentModal'" (click)="onDeleteModal(i,j)"></fa-icon>
-                        
-                        <!-- Modal pour l'édition des commentaires -->
-                        <!-- <div *ngIf="posts[i].comments[j].commentIsMine" class="modal fade" id="editedCommentModal" tabindex="-1" aria-labelledby="editedCommentLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="editedCommentLabel" >Éditer commentaire</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body" id="editedCommentModalBody">
-                                    <form (ngSubmit)="onEditComment(f)" #f="ngForm" class="input-group ">
-                                        <textarea class="form-control height-200" type="text" name="editedComment" aria-describedby="editedCommentLabel" ngModel={{posts[j].comments[i].textcontent}} required></textarea>
-                                        <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Valider</button>
-                                        <div name="post_id" ngDefaultControl ngModel="{{posts[i].post_id}}"></div>
-                                        <div name="creation_date" ngDefaultControl ngModel="{{posts[i].comments[j].creation_date}}"></div>
-                                        <div name="user_id" ngDefaultControl ngModel="{{posts[i].comments[j].user_id}}"></div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                </div>
-                              </div>
-                            </div>
-                        </div> -->
-
-                        <!-- Modal pour la suppression des commentaires -->
-                        <!-- <div *ngIf="comment.commentIsMine" class="modal fade" id="deleteCommentModal{{i}}{{j}}" tabindex="-1" aria-labelledby="deleteCommentLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteCommentLabel{{i}}{{j}}" >Etes-vous sur de vouloir supprimer ce commentaire ?</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form (ngSubmit)="onDeleteComment(f,i,j)" #f="ngForm" class="input-group ">
-                                        <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
-                                        <div name="creation_date" ngDefaultControl ngModel="{{comment.creation_date}}"></div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-danger" (click)="closeModal(i,j)">Supprimer commentaire</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> -->
-                        
-
                     </div>
-
                     <form (ngSubmit)="onSubmitComment(f)" #f="ngForm" class="input-group ">
                         <textarea class="form-control textcontent commentbox-height border" type="text" name="comment" aria-describedby="commentLabel" placeholder="Répondez à {{post.firstname}}" ngModel required></textarea>
                         <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Commenter</button>

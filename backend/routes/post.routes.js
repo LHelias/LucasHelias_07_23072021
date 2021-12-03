@@ -8,6 +8,6 @@ router.get("/accueil", auth, postCtrl.getAll);
 
 // router.delete('/accueil', postCtrl.deleteOnePost);
 
-// router.post("/inscription", postCtrl.createOne);
+router.post("/post/nouveau", postCtrl.createNewPost);
 
 module.exports = router;
