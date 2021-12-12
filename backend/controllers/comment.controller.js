@@ -62,7 +62,7 @@ exports.deleteOneComment = (req, res, next) => {
         } else {
             res.send(results);
             console.log(results)
-            console.log("deleted post");
+            console.log("deleted comment");
         }
     });
 }

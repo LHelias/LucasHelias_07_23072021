@@ -44,8 +44,12 @@
                     <div class="thumbnail-tiny border border-secondary">
                         <img src="../../assets/images/jean-paul-rouve.jpg">
                     </div>
-                    <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{frenchFormatter.format(post.creation_date)}}</span></h2>
-                    <app-delete-post-modal *ngIf="post.postIsMine" post="post"></app-delete-post-modal>
+                    <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{FrenchFormat(post.creation_date)}}</span></h2>
+                    <fa-icon [icon]="editIcon" class="ms-auto align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#editPostModal'" (click)="openPostModal(post)"></fa-icon>
+                    <!-- <app-edit-post-modal *ngIf="post.postIsMine" [post]="post" (onEditPost)="test()" ></app-edit-post-modal> -->
+                    <fa-icon [icon]="deleteIcon" class="ms-1 align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#deletePostModal'" (onDeletePost)="onDeletePost(post)" (click)="openPostModal(post)"></fa-icon>
+                    <!-- <app-delete-post-modal *ngIf="post.postIsMine" [post]="post" (onDeletePost)="onDeletePost(post)"></app-delete-post-modal> -->
+                    
                 </div>
                 <div align="center" class="col">
                     <div class="container-iframe" *ngIf="post.video_url">
@@ -70,6 +74,11 @@
                     </form>
                 </div>
             </section>
+
+            <!-- modal pour l'édition des posts -->
+            <app-edit-post-modal (onEditPost)="onEditPost(this.editPostModalComponent.editPostForm)" [post]="editedPost" #editPostModal></app-edit-post-modal>
+            <!-- modal pour la suppression des posts -->
+            <app-delete-post-modal [post]="editedPost" (onDeletePost)="onDeletePost(editedPost)"></app-delete-post-modal>
 
             <!-- Modal pour l'édition des commentaires -->
             <div class="modal fade" id="editedCommentModal" tabindex="-1" aria-labelledby="editedCommentLabel" aria-hidden="true">

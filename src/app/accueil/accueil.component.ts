@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -7,6 +7,9 @@ import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgModule } from '@angular/core';
 import { style } from '@angular/animations';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import * as moment from 'moment';
+import { EditPostModalComponent } from '../edit-post-modal/edit-post-modal.component';
+
 
 declare var $: any;
 declare var jQuery: any;
@@ -20,6 +23,7 @@ declare var jQuery: any;
 
 
 export class AccueilComponent implements OnInit {
+  @ViewChild('editPostModal') editPostModalComponent! :EditPostModalComponent;
   editIcon = faEdit;
   deleteIcon = faTimes;
   commentIsMine: boolean = false;
@@ -31,22 +35,20 @@ export class AccueilComponent implements OnInit {
   commentDeleteModalBody: any = [];
   url: string = "https://angular.io/api/router/RouterLink";
   urlSafe: SafeResourceUrl = "";
+  editedPost :any = [];
+
+  
   
   constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
   
   parameters = new HttpParams().set('email', localStorage.email);
   //définit un paramêtre de requète pour la requête GET (ici l'email)
 
-  frenchFormatter = new Intl.DateTimeFormat("fr-FR",
-  {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'numeric', 
-    day: 'numeric',
-    hour: 'numeric', 
-    minute: 'numeric',
-    hour12: false,
-  });
+  FrenchFormat(date:any) {
+    moment.locale('fr');
+    date = moment(date).format('LLL')
+    return(date);
+  }
 
   ngOnInit(): void {
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
@@ -65,18 +67,11 @@ export class AccueilComponent implements OnInit {
         for (let i in this.posts){
           this.posts[i].comments = [];
 
-          this.posts[i].video_url_safe = this.sanitizer.bypassSecurityTrustResourceUrl(this.posts[i].video_url);
+          this.posts[i].video_url_safe = this.sanitizer.bypassSecurityTrustResourceUrl(this.posts[i].video_url); //permet d'utiliser les url des vidéos
 
           if(this.posts[i].user_id == this.user.email) {
-            this.posts[i].postIsMine = true;
+            this.posts[i].postIsMine = true; //on définit pour chaque post s'il appartient à l'utilisateur
           };
-
-          let date = new Date(this.posts[i].creation_date);
-          var date_utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
-          date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-          this.posts[i].creation_date = date_utc;
-
-          //on profite de cette boucle sur les posts pour formater la date des posts
 
           for(let j in this.comments){
             if (this.comments[j].post_id == this.posts[i].post_id){
@@ -93,13 +88,17 @@ export class AccueilComponent implements OnInit {
         }
         
         console.log("Posts traités :",this.posts);
-
+        console.log(this.editPostModalComponent);
       },
       (error) => {
         console.log('erreur : ' + error.message);
       }
     )
 
+  }
+
+  ngAfterViewInit(){
+    console.log(this.editPostModalComponent)
   }
 
   onSubmitComment(form: NgForm){
@@ -175,5 +174,44 @@ export class AccueilComponent implements OnInit {
     $('#'+myModalId).modal('hide');
 }
   
+  onDeletePost(post: any){
+    console.log(post);
+    let url = 'http://localhost:3000/post/supprimer?postId={0}&creation_date={1}&user_id={2}';
+    url = url.replace('{0}', post.post_id).replace('{1}',post.creation_date).replace('{2}',post.user_id);
+    this.httpClient.request('delete', url, post)
+    .subscribe(
+      (response:any) => {
+        console.log("post supprimé :", post.textcontent);
+        // this.post[i].splice(i,1);//supprime le commentaire de la liste des commentaires en front-end.
+      }, (error) => {
+        console.log("Erreur : " + error.message);
+      }
+    )
+  };
 
+  onEditPost(form : NgForm){    
+    console.log(form)
+
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.put('http://localhost:3000/post/editer', form.value, {headers})
+    .subscribe(
+      (response:any) => {
+        console.log(response);
+        if (response.affectedRows = 1){
+          alert("post édité avec succés.");
+        }
+
+      }, (error) => {
+        console.log("Erreur : " + error.message);
+      }
+    )
+  }
+
+  openPostModal(post:any){
+    this.editedPost= post
+  }
+
+  test(){
+    console.log(this.editPostModalComponent.editPostForm.value)
+  }
 };

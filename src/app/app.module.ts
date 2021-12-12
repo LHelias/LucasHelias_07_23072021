@@ -14,6 +14,7 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { FormsModule } from '@angular/forms';
 import { NouveauPostComponent } from './nouveau-post/nouveau-post.component';
 import { DeletePostModalComponent } from './delete-post-modal/delete-post-modal.component';
+import { EditPostModalComponent } from './edit-post-modal/edit-post-modal.component';
 
 const appRoutes: Routes = [
   { path: 'inscription', component: InscriptionComponent},
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     AccueilComponent,
     NouveauPostComponent,
     DeletePostModalComponent,
+    EditPostModalComponent,
   ],
   imports: [
     BrowserModule,
