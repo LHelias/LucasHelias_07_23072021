@@ -36,8 +36,6 @@ export class AccueilComponent implements OnInit {
   url: string = "https://angular.io/api/router/RouterLink";
   urlSafe: SafeResourceUrl = "";
   editedPost :any = [];
-
-  
   
   constructor(private httpClient: HttpClient,private router: Router, private route: ActivatedRoute, public sanitizer: DomSanitizer) { }
   
@@ -92,7 +90,6 @@ export class AccueilComponent implements OnInit {
         console.log('erreur : ' + error.message);
       }
     )
-
   }
 
   onSubmitComment(form: NgForm, i:number){
@@ -103,7 +100,8 @@ export class AccueilComponent implements OnInit {
         textcontent:form.value.comment
       };
     console.log(commentForm);
-    this.httpClient.post('http://localhost:3000/accueil', commentForm)
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.post('http://localhost:3000/accueil', commentForm, {headers})
     .subscribe(
       (response: any) =>{
         console.log("commentaire ajouté");
@@ -134,9 +132,6 @@ export class AccueilComponent implements OnInit {
         this.posts[i].comments[j].textcontent = editCommentForm.textcontent;
         this.closeModal('editedCommentModal');
         console.log("commentaire édité");
-        
-        // location.reload();
-
       }, (error) => {
         console.log("Erreur : " + error.message);
       }
@@ -146,7 +141,8 @@ export class AccueilComponent implements OnInit {
   onDeleteComment(form: NgForm,i:number,j:number){
     let url = 'http://localhost:3000/accueil?postId={0}&creation_date={1}';
     url = url.replace('{0}', form.value.post_id).replace('{1}', form.value.creation_date);
-    this.httpClient.request('delete', url, form.value)
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.request('delete', url, {headers:headers} )
     .subscribe(
       (response:any) => {
         console.log("commentaire supprimé :", this.posts[i].comments[j]);
@@ -180,22 +176,18 @@ export class AccueilComponent implements OnInit {
   }
   
   onDeletePost(post: any){
-    console.log(post);
     let url = 'http://localhost:3000/post/supprimer?postId={0}&creation_date={1}&user_id={2}';
     url = url.replace('{0}', post.post_id).replace('{1}',post.creation_date).replace('{2}',post.user_id);
-    this.httpClient.request('delete', url, post)
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.request('delete', url, {headers})
     .subscribe(
       (response:any) => {
         // alert("post supprimé : " + post.textcontent);
         this.closeModal('deletePostModal');
-        
         let postElement = document.getElementById('post' + post.post_index);
         if(postElement){
           $(postElement).slideUp(); //fait disparaitre le commentaire de la liste des commentaires en front-end
         }
-        
-        // this.posts.splice(post.post_index,1);//supprime le commentaire de la liste des commentaires en front-end.
-
       }, (error) => {
         console.log("Erreur : " + error.message);
       }

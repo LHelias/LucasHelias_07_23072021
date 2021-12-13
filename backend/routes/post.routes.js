@@ -6,10 +6,10 @@ const auth = require('../middleware/auth');
 
 router.get("/accueil", auth, postCtrl.getAll);
 
-router.delete('/post/supprimer', postCtrl.deletePost);
+router.delete('/post/supprimer', auth, postCtrl.deletePost);
 
-router.post("/post/nouveau", postCtrl.createNewPost);
+router.post("/post/nouveau", auth, postCtrl.createNewPost);
 
-router.put("/post/editer", postCtrl.editPost)
+router.put("/post/editer", auth, postCtrl.editPost)
 
 module.exports = router;
