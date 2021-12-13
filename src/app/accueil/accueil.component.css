@@ -142,7 +142,6 @@ footer{
 
 #content-wrap {
     padding-bottom: calc(var(--footer-height) + 3em);    /* hauteur du footer */
-
     /* #page-container et #content-wrap permettent d'afficher le footer à sa juste place en bas de la page */
 }
 

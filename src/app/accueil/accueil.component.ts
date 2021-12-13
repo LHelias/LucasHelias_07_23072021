@@ -86,9 +86,7 @@ export class AccueilComponent implements OnInit {
           }
 
         }
-        
         console.log("Posts traités :",this.posts);
-        console.log(this.editPostModalComponent);
       },
       (error) => {
         console.log('erreur : ' + error.message);
@@ -97,11 +95,7 @@ export class AccueilComponent implements OnInit {
 
   }
 
-  ngAfterViewInit(){
-    console.log(this.editPostModalComponent)
-  }
-
-  onSubmitComment(form: NgForm){
+  onSubmitComment(form: NgForm, i:number){
     console.log(form.value);
     var commentForm = {
         email:this.user.email,
@@ -113,25 +107,35 @@ export class AccueilComponent implements OnInit {
     .subscribe(
       (response: any) =>{
         console.log("commentaire ajouté");
-        location.reload();
+        let myComment = {
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
+          textcontent: commentForm.textcontent
+        }
+        console.log(this.posts[i].comments);
+        this.posts[i].comments.push(myComment);
+        // location.reload();
       },(error) => {
         console.log("Erreur : " + error.message);
       }
     )
   }
 
-  onEditComment(form: NgForm){
+  onEditComment(form: NgForm, i:number, j:number){
     var editCommentForm = {
       textcontent: form.value.editedComment,
       creation_date: form.value.creation_date
     };
-  
+    console.log(form.value);
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
     this.httpClient.put('http://localhost:3000/accueil', editCommentForm, {headers})
     .subscribe(
       (response:any) => {
+        this.posts[i].comments[j].textcontent = editCommentForm.textcontent;
+        this.closeModal('editedCommentModal');
         console.log("commentaire édité");
-        location.reload();
+        
+        // location.reload();
 
       }, (error) => {
         console.log("Erreur : " + error.message);
@@ -153,13 +157,14 @@ export class AccueilComponent implements OnInit {
     )
   };
 
-
   onEditModal(i:number,j:number){
     console.log("onEditModal: ",this.posts[i].comments[j]);
     this.commentEditModalBody.textcontent = this.posts[i].comments[j].textcontent;
     this.commentEditModalBody.post_id = this.posts[i].post_id;
     this.commentEditModalBody.creation_date = this.posts[i].comments[j].creation_date;
     this.commentEditModalBody.user_id = this.posts[i].comments[j].user_id;
+    this.commentEditModalBody.post_index = i;
+    this.commentEditModalBody.comment_index = j;
   }
 
   onDeleteModal(i:number,j:number){
@@ -172,7 +177,7 @@ export class AccueilComponent implements OnInit {
 
   closeModal(myModalId:string) {
     $('#'+myModalId).modal('hide');
-}
+  }
   
   onDeletePost(post: any){
     console.log(post);
@@ -181,8 +186,16 @@ export class AccueilComponent implements OnInit {
     this.httpClient.request('delete', url, post)
     .subscribe(
       (response:any) => {
-        console.log("post supprimé :", post.textcontent);
-        // this.post[i].splice(i,1);//supprime le commentaire de la liste des commentaires en front-end.
+        // alert("post supprimé : " + post.textcontent);
+        this.closeModal('deletePostModal');
+        
+        let postElement = document.getElementById('post' + post.post_index);
+        if(postElement){
+          $(postElement).slideUp(); //fait disparaitre le commentaire de la liste des commentaires en front-end
+        }
+        
+        // this.posts.splice(post.post_index,1);//supprime le commentaire de la liste des commentaires en front-end.
+
       }, (error) => {
         console.log("Erreur : " + error.message);
       }
@@ -190,28 +203,28 @@ export class AccueilComponent implements OnInit {
   };
 
   onEditPost(form : NgForm){    
-    console.log(form)
-
+    console.log(form.value)
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
     this.httpClient.put('http://localhost:3000/post/editer', form.value, {headers})
     .subscribe(
       (response:any) => {
-        console.log(response);
         if (response.affectedRows = 1){
           alert("post édité avec succés.");
+          console.log("editedPost", this.editedPost);
+          this.posts[this.editedPost.post_index].textcontent = form.value.textcontent; //remplace le texte du post en front-end
+          this.posts[this.editedPost.post_index].video_url = form.value.video_url; //remplace la video du post en front-end
         }
-
+        this.closeModal('editPostModal');
       }, (error) => {
         console.log("Erreur : " + error.message);
       }
     )
   }
 
-  openPostModal(post:any){
+  openPostModal(post:any, i:number){
     this.editedPost= post
+    this.editedPost.post_index = i;
+    console.log("openPostModal", this.editedPost);
   }
 
-  test(){
-    console.log(this.editPostModalComponent.editPostForm.value)
-  }
 };

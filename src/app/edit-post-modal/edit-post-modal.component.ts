@@ -19,7 +19,6 @@ export class EditPostModalComponent implements OnInit {
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
-    console.log("post : ",this.post);
   }
 
   // onEditPost(form : NgForm){

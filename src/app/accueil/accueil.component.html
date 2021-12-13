@@ -39,16 +39,14 @@
 
         <main class="container-md">
             
-            <section class="post" *ngFor="let post of posts; index as i">
+            <section class="post" *ngFor="let post of posts; index as i" id="post{{i}}" style="transition: all, 1000">
                 <div class="d-flex align-items-center">
                     <div class="thumbnail-tiny border border-secondary">
                         <img src="../../assets/images/jean-paul-rouve.jpg">
                     </div>
                     <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{FrenchFormat(post.creation_date)}}</span></h2>
-                    <fa-icon [icon]="editIcon" class="ms-auto align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#editPostModal'" (click)="openPostModal(post)"></fa-icon>
-                    <!-- <app-edit-post-modal *ngIf="post.postIsMine" [post]="post" (onEditPost)="test()" ></app-edit-post-modal> -->
-                    <fa-icon [icon]="deleteIcon" class="ms-1 align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#deletePostModal'" (onDeletePost)="onDeletePost(post)" (click)="openPostModal(post)"></fa-icon>
-                    <!-- <app-delete-post-modal *ngIf="post.postIsMine" [post]="post" (onDeletePost)="onDeletePost(post)"></app-delete-post-modal> -->
+                    <fa-icon [icon]="editIcon" class="ms-auto align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#editPostModal'" (click)="openPostModal(post, i)"></fa-icon>
+                    <fa-icon [icon]="deleteIcon" class="ms-1 align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#deletePostModal'" (onDeletePost)="onDeletePost(post)" (click)="openPostModal(post, i)"></fa-icon>
                     
                 </div>
                 <div align="center" class="col">
@@ -67,7 +65,7 @@
                         <fa-icon *ngIf="comment.commentIsMine" [icon]="editIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#editedCommentModal'" (click)="onEditModal(i,j)"></fa-icon>
                         <fa-icon *ngIf="comment.commentIsMine" [icon]="deleteIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteCommentModal'" (click)="onDeleteModal(i,j)"></fa-icon>
                     </div>
-                    <form (ngSubmit)="onSubmitComment(f)" #f="ngForm" class="input-group ">
+                    <form (ngSubmit)="onSubmitComment(f,i)" #f="ngForm" class="input-group ">
                         <textarea class="form-control textcontent commentbox-height border" type="text" name="comment" aria-describedby="commentLabel" placeholder="Répondez à {{post.firstname}}" ngModel required></textarea>
                         <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Commenter</button>
                         <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
@@ -89,12 +87,13 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="editedCommentModalBody">
-                        <form (ngSubmit)="onEditComment(editCommentForm)" #editCommentForm="ngForm" class="input-group ">
+                        <form (ngSubmit)="onEditComment(editCommentForm, commentEditModalBody.post_index, commentEditModalBody.comment_index)" #editCommentForm="ngForm" class="input-group ">
                             <textarea class="form-control height-200" type="text" name="editedComment" aria-describedby="editedCommentLabel" ngModel={{this.commentEditModalBody.textcontent}} required></textarea>
                             <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="editCommentForm.invalid">Valider</button>
                             <div name="post_id" ngDefaultControl ngModel="{{this.commentEditModalBody.post_id}}"></div>
                             <div name="creation_date" ngDefaultControl ngModel="{{this.commentEditModalBody.creation_date}}"></div>
                             <div name="user_id" ngDefaultControl ngModel="{{this.commentEditModalBody.user_id}}"></div>
+                            
                         </form>
                     </div>
                     <div class="modal-footer">
