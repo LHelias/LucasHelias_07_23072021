@@ -10,7 +10,7 @@ exports.getAll = (req, res, next) => {
     let posts = [];
     let comments = [];
     let user = [];
-    sql.query("SELECT `post`.*, `user`.`firstname`, `user`.`lastname` FROM `post` LEFT JOIN `user` ON `post`.`user_id` = `user`.`email` ORDER BY post.creation_date DESC; SELECT `comment`.*, `user`.`firstname`, `user`.`lastname` FROM `comment` LEFT JOIN `user` ON `comment`.`user_id` = `user`.`email` ORDER BY comment.creation_date; SELECT * FROM user WHERE email = ?",req.query.email, (error, results) => {
+    sql.query("SELECT `post`.*, `users`.`firstname`, `users`.`lastname` FROM `post` LEFT JOIN `users` ON `post`.`user_id` = `users`.`email` ORDER BY post.creation_date DESC; SELECT `comment`.*, `users`.`firstname`, `users`.`lastname` FROM `comment` LEFT JOIN `users` ON `comment`.`user_id` = `users`.`email` ORDER BY comment.creation_date; SELECT * FROM users WHERE email = ?",req.query.email, (error, results) => {
         if (error) {
             res.send(error);
             res.status(500);  
