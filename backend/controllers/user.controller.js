@@ -3,8 +3,13 @@ const sql = require("../models/db");
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 
+
 exports.createOne = (req, res, next) => {
+  console.log("req CREATE ONE: ", req.body);
+  
   var newUserObject = req.body;
+  newUserObject.profile_picture_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; //WIP sur multer
+
   var newUser;
 
   newUserObject.email = newUserObject.email.toLowerCase(); // transforme les majuscules de l'adresse email en minuscules.
@@ -122,4 +127,24 @@ exports.modifyUserProfile = (req, res, next) => {
       res.send(results);
     }
   });
+}
+
+exports.deleteUser = (req, res, next) => {
+  console.log(req.body.u);
+  sql.query("DELETE FROM users WHERE users.email = ?", req.body.email, (error, results) => {
+    if (error) {
+      console.log("error", error);
+      res.status(401)
+    } else if (results.affectedRows == 0) {
+      //impossible de trouver l'utilisateru avec l'email.
+      res.status(500);
+      res.send(error)
+    }
+    else {
+      console.log("deleted user: ", results)
+      res.status(201)
+      res.send(results);
+    }
+  });
+
 }

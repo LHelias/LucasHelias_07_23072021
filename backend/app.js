@@ -18,6 +18,10 @@ app.use((req, res, next) => {
     next();
 });
 
+
+app.use('/images', express.static(__dirname + '/Images'));
+
+
 //bodyParser permet de traiter les requêtes POST
 app.use(bodyParser.json());
 

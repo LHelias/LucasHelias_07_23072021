@@ -12,7 +12,7 @@
                     <div class='col-12 col-sm-auto d-flex justify-content-evenly align-items-center flex-wrap'>
                         <span class="mx-3 fw-bold">{{user.firstname}} {{user.lastname}}</span>
                         <div class="thumbnail-small mx-3">
-                            <img src="../../assets/images/Lucas.jpg">
+                            <img src="{{user.profile_picture_url}}">
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle fw-bold" type="button" id="dropdownMenu2"
@@ -26,7 +26,8 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><button class="dropdown-item hover-red" type="button"><a routerLink="/connexion">Deconnexion</a></button></li>
+                                <li><button class="dropdown-item hover-red" type="button" routerLink="/connexion"><a routerLink="/connexion">Deconnexion</a></button></li>
+                                <li><button class="dropdown-item hover-red" type="button" (click)="deleteUser(this.user.email)"><a>Supprimer profil</a></button></li>
                             </ul>
                         </div>
                     </div>
@@ -42,7 +43,7 @@
             <section class="post" *ngFor="let post of posts; index as i" id="post{{i}}" style="transition: all, 1000">
                 <div class="d-flex align-items-center">
                     <div class="thumbnail-tiny border border-secondary">
-                        <img src="../../assets/images/jean-paul-rouve.jpg">
+                        <img src="{{post.profile_picture_url}}">
                     </div>
                     <h2 class="fs-6 border"><b>{{post.firstname}} {{post.lastname}}</b><span> le {{FrenchFormat(post.creation_date)}}</span></h2>
                     <fa-icon [icon]="editIcon" class="ms-auto align-self-start" *ngIf="post.postIsMine" data-bs-toggle="modal" [attr.data-bs-target]="'#editPostModal'" (click)="openPostModal(post, i)"></fa-icon>

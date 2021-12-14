@@ -63,12 +63,16 @@
                             <div class="form-separator"></div>
                         </div>
                         <div class='d-flex flex-wrap justify-content-between align-items-center'>
-                            <div class="thumbnail-large">
-                                <img src="../../assets/images/Lucas.jpg">
+                            <div class="thumbnail-large" for="profilePicture">
+                                <img [src]="url ? url : '../../assets/images/img_avatar.png'">
                             </div>
                             <div>
-                                <input type="file" id="profilePicture" name="profilePicture" class="" accept="image/*" ngModel>
-                                <label for="profilePicture" class=" d-flex align-items-center btn btn-outline-secondary form-control"><div class="">Choisir une photo</div></label>
+                                
+                                <label for="profilePicture" class=" d-flex align-items-center btn btn-outline-secondary form-control">
+                                    <div class="">Choisir une photo
+                                        <input type="file" (change)="onFileSelected($event)" id="profilePicture" name="profilePicture" class="" accept="image/*" ngModel>
+                                    </div>
+                                </label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-evenly mt-3">

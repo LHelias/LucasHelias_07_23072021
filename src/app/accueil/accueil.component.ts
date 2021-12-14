@@ -219,4 +219,19 @@ export class AccueilComponent implements OnInit {
     console.log("openPostModal", this.editedPost);
   }
 
+  deleteUser(user_id:string){
+    console.log('deleteUser');
+    console.log(this.user);
+    let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
+    this.httpClient.request('delete','http://localhost:3000/profil/suppression/', {headers:headers, body:user_id} )
+    .subscribe(
+      (response:any) => {
+        console.log("Utilisateur supprimé :", user_id);
+
+      }, (error) => {
+        console.log("Erreur : " + error.message);
+      }
+    )
+  }
+
 };
