@@ -37,18 +37,13 @@ export class InscriptionComponent implements OnInit {
   onSubmitInscription(form: NgForm){
     // console.log("form.value", form.value);
     if (form.value.password === form.value.passwordConfirmation) {
-      console.log("OK");
-      
-
       this.formData= new FormData;
-      console.log(this.profilePicture);
-      console.log(this.formData);
-      this.formData.append('profilePicture', this.profilePicture, this.profilePicture.name);
-      
+
+      if(this.profilePicture){
+        this.formData.append('profilePicture', this.profilePicture, this.profilePicture.name);
+      };
 
       const formValuesJSON= JSON.stringify(form.value)
-
-      // this.formData.append('formValues', formValuesBlob);
       console.log("form.value: ",form.value);
 
       this.formData.append("email", form.value.email)
@@ -56,13 +51,10 @@ export class InscriptionComponent implements OnInit {
       this.formData.append("lastname", form.value.lastname)
       this.formData.append("password", form.value.password)
 
-
       this.httpClient.post('http://localhost:3000/inscription', this.formData)
       .subscribe(
         (response : any) => {
           alert(`Inscription réussie ! Votre compte est bien créé ${form.value.firstname} ${form.value.lastname}.`);
-          
-          
           this.router.navigate(['/connexion']);
         },
         (error) => {
@@ -70,8 +62,21 @@ export class InscriptionComponent implements OnInit {
         }
       );
     } else {
-      alert("Erreur : Le mot de passe et la confirmation du mot de passe sont différents !")
+      alert("Erreur : Le mot de passe et la confirmation du mot de passe sont différents !");
     }
   }
 
-}
+  validateEmail(emailId:string) {
+    var email = (<HTMLInputElement>document.getElementById(emailId)).value;
+   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+    {
+      document.getElementById(emailId)?.classList.remove("is-invalid");
+      return (true)
+    }
+      document.getElementById(emailId)?.classList.add("is-invalid");
+      return (false)
+  }
+
+
+};
+

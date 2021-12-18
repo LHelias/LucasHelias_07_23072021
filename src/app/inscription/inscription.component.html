@@ -28,7 +28,10 @@
                                 <label for="username"><h2 class="fs-6 fw-normal" id="emailLabel">Adresse email</h2></label>
                                 <div class="form-separator"></div>
                             </div>
-                            <input class="form-control" type="email" id="email" name="email" aria-describedby="emailLabel" onfocus="this.removeAttribute('readonly');" readonly ngModel required>
+                            <input class="form-control" type="email" id="email" name="email" aria-describedby="emailLabel" onfocus="this.removeAttribute('readonly');" (focusout)="validateEmail('email')" readonly ngModel email="true" required>
+                            <div class="invalid-feedback" id="invalidEmailFeedback">
+                                Adresse email invalide.
+                            </div>
                         </div>
                         <div class="mt-3">
                             <div class="input-title-container">

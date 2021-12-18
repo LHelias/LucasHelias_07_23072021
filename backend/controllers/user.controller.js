@@ -8,7 +8,10 @@ exports.createOne = (req, res, next) => {
   console.log("req CREATE ONE: ", req.body);
   
   var newUserObject = req.body;
-  newUserObject.profile_picture_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; //WIP sur multer
+
+  if(req.file){
+    newUserObject.profile_picture_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+  };
 
   var newUser;
 
@@ -69,7 +72,7 @@ exports.login = (req, res, next) => {
 
       bcrypt.compare(req.body.password,results[0].password).then(valid => {
         if(!valid) {
-          res.status(401).send({message: "mot de passe incorrect"})
+          res.status(401).send({message: "mot de passe incorrect"});
         }
         res.status(201).json({
           email: results[0].email,

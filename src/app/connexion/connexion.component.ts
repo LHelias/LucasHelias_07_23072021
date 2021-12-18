@@ -28,13 +28,26 @@ export class ConnexionComponent implements OnInit {
         console.log("Connexion OK !");
         localStorage.email = form.value.email;
         this.router.navigate([`/accueil`]);
+
       },
       (error) => {
-        console.log("Erreur : " + error.message);
+        console.log(error.error.message);
+        if(error.error.message == "mot de passe incorrect"){
+        document.getElementById("password")?.classList.add("is-invalid");
+        }
       }
     );
   };
 
-  
+  validateEmail(emailId:string) {
+    var email = (<HTMLInputElement>document.getElementById(emailId)).value;
+   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+    {
+      document.getElementById(emailId)?.classList.remove("is-invalid");
+      return (true)
+    }
+      document.getElementById(emailId)?.classList.add("is-invalid");
+      return (false)
+  }
 
 };
