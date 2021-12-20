@@ -25,10 +25,6 @@ app.use('/images', express.static(__dirname + '/Images'));
 //bodyParser permet de traiter les requêtes POST
 app.use(bodyParser.json());
 
-// simple route
-// app.get("/", (req, res, next) => {
-//     res.json({ message: "Welcome to bezkoder application." });
-// });
 
 app.use('/', userRoutes);
 app.use('/', postRoutes);
