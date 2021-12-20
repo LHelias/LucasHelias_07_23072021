@@ -1,0 +1,26 @@
+<!-- <fa-icon [icon]="editIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#editPostModal'"></fa-icon> -->
+
+<div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPostLabel">Éditer commentaire</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="editPostModalBody">
+            <form #editPostForm="ngForm" class="d-flex flex-column">
+                <textarea class="form-control height-200" type="text" name="textcontent" aria-describedby="editPostLabel" ngModel={{post.textcontent}} required></textarea>
+                <textarea class="form-control height-200" type="text" name="video_url" aria-describedby="editPostLabel" ngModel={{post.video_url}}></textarea>
+                
+                <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
+                <div name="creation_date" ngDefaultControl ngModel="{{post.creation_date}}"></div>
+                <div name="user_id" ngDefaultControl ngModel="{{post.user_id}}"></div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary text-light" [disabled]="editPostForm.invalid" (click)="onClick(editPostForm)">Valider</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+</div>

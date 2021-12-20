@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+*{
+    font-family: 'Montserrat', sans-serif;
+    --primary-accent-color:#d1515a;
+    --secondary-accent-color:#091f43;
+    --background-color:#e6e6e6;
+    --footer-height: 150px;
+}
+
+@media screen and (max-width:576px){
+    *{
+        --footer-height: 300px;
+    }
+}
+
+a, a:hover, a:focus{
+    color: #000000;
+    text-decoration: none;
+}
+
+/* css header */
+.redbar{
+    width: 100%;
+    height: 5px;
+    background-color: var(--primary-accent-color);
+}
+
+.bluebar{
+    width:100%;
+    height: 10px;
+    background-color: var(--secondary-accent-color);
+}
+
+.btn{
+    height: 3em;
+    color: black;
+}
+
+button + button{
+    margin-left: 1em;
+}
+
+/* CSS inscription*/
+
+.form-separator{
+    width:calc(100% + 10px);
+    height: 0.08em;
+    background-color: var(--primary-accent-color);
+    overflow: visible;
+    margin-bottom: 0.5em;
+}
+
+.input-title-container{
+    width: fit-content;
+}
+
+.thumbnail-large{
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px black solid;
+}
+
+.thumbnail-large img{
+    width:100%;
+}
+
+.thumbnail-small{
+    max-width: 80px;
+    max-height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px black solid;
+}
+
+.thumbnail-small img{
+    width:100%;
+    height: 100%;
+}
+
+.thumbnail-tiny{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px black solid;
+}
+
+.thumbnail-tiny img{
+    width:100%;
+}
+
+[type="file"] {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    white-space: nowrap;
+    width: 1px;
+}
+/* cache le input file */
+
+  
+[type="file"]:focus + label{
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+/* applique les styles form-control-focus au label du input file */
+
+.btn-red{
+    background-color: var(--primary-accent-color);
+    color: black;
+}
+
+.btn-red:hover{
+    background-color: #8f363c;
+    color: white;
+}
+
+footer{
+    background-color: var(--background-color);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-height{
+    min-height: var(--footer-height);
+}
+
+#page-container{
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: calc(var(--footer-height) + 3em);    /* hauteur du footer */
+
+    /* #page-container et #content-wrap permettent d'afficher le footer à sa juste place en bas de la page */
+}
+
+.hover-blue:hover{
+    background-color: #86b7fe;
+}
+
+.hover-red:hover{
+    background-color: var(--primary-accent-color);
+}
+
+.post{
+    background-color: var(--background-color);
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 0.5em;
+}
+
+.post > .textcontent{
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+}
+
+.container-iframe {
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+  
+  /* Then style the iframe to fit in the container div with full height and width */
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.textbox{
+    background-color: white;
+    padding: 0.6em;
+    width: auto;
+    text-align: justify;
+    border-radius: 0.3em;
+}
+
+.textcontent{
+    resize: none;
+    min-width: 200px;
+    transition-property: height;
+    transition-duration: 400ms;
+}
+
+.textcontent:focus{
+    height: 160px;
+    transition-property: height;
+    transition-duration: 400ms;
+}
+
+.commentbox-height{
+    height: 40px;
+    padding: O.5em!important;
+}
+
+.height-200{
+    height: 200px;
+}
