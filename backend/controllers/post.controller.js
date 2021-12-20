@@ -10,19 +10,18 @@ exports.getAll = (req, res, next) => {
     let posts = [];
     let comments = [];
     let user = [];
-    sql.query("SELECT `post`.*, `users`.`firstname`, `users`.`lastname` , `users`.`profile_picture_url` FROM `post` LEFT JOIN `users` ON `post`.`user_id` = `users`.`email` ORDER BY post.creation_date DESC; SELECT `comment`.*, `users`.`firstname`, `users`.`lastname` FROM `comment` LEFT JOIN `users` ON `comment`.`user_id` = `users`.`email` ORDER BY comment.creation_date; SELECT * FROM users WHERE email = ?",req.query.email, (error, results) => {
+    sql.query("SELECT `post`.*, `users`.`firstname`, `users`.`lastname` , `users`.`profile_picture_url` FROM `post` LEFT JOIN `users` ON `post`.`user_id` = `users`.`email` ORDER BY post.creation_date DESC; SELECT `comment`.*, `users`.`firstname`, `users`.`lastname` FROM `comment` LEFT JOIN `users` ON `comment`.`user_id` = `users`.`email` ORDER BY comment.creation_date; SELECT `users`.`email` , `users`.`firstname`, `users`.`lastname`, `users`.`profile_picture_url` FROM users WHERE email = ?",req.query.email, (error, results) => {
         if (error) {
             res.send(error);
             res.status(500);  
             return;
         } else {
             res.send(results);
-            console.log("results: ", results)
+            
             posts = results[0];
             comments = results[1];
             user = results[2][0];
-            // console.log("posts: ", results[0]);
-            // console.log("comments:", results[1]);
+
             
         }
     });    

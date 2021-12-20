@@ -26,7 +26,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><button class="dropdown-item hover-red" type="button" routerLink="/connexion"><a routerLink="/connexion">Deconnexion</a></button></li>
+                                <li><button class="dropdown-item hover-red" type="button" (click)="disconnect()"><a>Deconnexion</a></button></li>
                                 <li><button class="dropdown-item hover-red" type="button" (click)="deleteUser(this.user.email)"><a>Supprimer profil</a></button></li>
                             </ul>
                         </div>
@@ -67,7 +67,7 @@
                         <fa-icon *ngIf="comment.commentIsMine" [icon]="deleteIcon" class="ms-1" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteCommentModal'" (click)="onDeleteModal(i,j)"></fa-icon>
                     </div>
                     <form (ngSubmit)="onSubmitComment(f,i)" #f="ngForm" class="input-group ">
-                        <textarea class="form-control textcontent commentbox-height border" type="text" name="comment" aria-describedby="commentLabel" placeholder="Répondez à {{post.firstname}}" ngModel required></textarea>
+                        <textarea class="form-control textcontent commentbox-height border" id="commentBox{{i}}" type="text" name="comment" aria-describedby="commentLabel" placeholder="Répondez à {{post.firstname}}" ngModel required></textarea>
                         <button type="submit" class="btn btn-primary ms-auto text-light commentbox-height border" [disabled]="f.invalid">Commenter</button>
                         <div name="post_id" ngDefaultControl ngModel="{{post.post_id}}"></div>
                     </form>

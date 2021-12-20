@@ -13,8 +13,8 @@
                     <div class='col-12 col-sm-auto d-flex justify-content-evenly align-items-center flex-wrap'>
                         <span class="mx-3 fw-bold">{{user.firstname}} {{user.lastname}}</span>
                         <div class="thumbnail-small mx-3">
-                            <img src="../../assets/images/Lucas.jpg">
-                        </div>
+                            <img src="{{user.profile_picture_url}}" alt="photo de profil de {{user.firstname}} {{user.lastname}}">
+                        </div> 
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle fw-bold" type="button"
                                 id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">

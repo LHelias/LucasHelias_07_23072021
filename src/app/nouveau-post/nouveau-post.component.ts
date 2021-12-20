@@ -18,19 +18,21 @@ export class NouveauPostComponent implements OnInit {
   user : any = [];
   commentEditModalBody: any = [];
   commentDeleteModalBody: any = [];
+  parameters = new HttpParams().set('email', localStorage.email);
+
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
+
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.user);
-    console.log(this.user);
   }
 
   onNewPost(form:NgForm){
     console.log(form.value);
     let url = "http://localhost:3000/post/nouveau"
     let headers = new HttpHeaders().set('Authorization', localStorage.jwt_token);
-    this.httpClient.post(url, [this.user.email, form.value.textcontent,form.value.video_url], {headers})
+    this.httpClient.post(url, [this.user.email, form.value.textcontent,form.value.video_url], {headers, 'params': this.parameters })
     .subscribe(
       (response:any) => {
         console.log("response : ", response);
