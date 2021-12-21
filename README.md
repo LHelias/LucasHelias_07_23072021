@@ -1,6 +1,6 @@
 # Groupomania
 
-## db.config.js
+## configuration Base de données.
 Avant de lancer les installations de dépendances :
 `touch backend/config/db.config.js`
 

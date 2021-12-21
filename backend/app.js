@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const connection = require('./models/db');
 const userRoutes = require('./routes/user.routes');
-const postRoutes = require ('./routes/post.routes');
-const commentRoutes = require ('./routes/comment.routes');
+const postRoutes = require('./routes/post.routes');
+const commentRoutes = require('./routes/comment.routes');
 const app = express();
 
 //permet de résoudre les erreurs CORS
@@ -25,10 +25,8 @@ app.use('/images', express.static(__dirname + '/Images'));
 //bodyParser permet de traiter les requêtes POST
 app.use(bodyParser.json());
 
-
 app.use('/', userRoutes);
 app.use('/', postRoutes);
 app.use('/', commentRoutes);
-
 
 module.exports = app;

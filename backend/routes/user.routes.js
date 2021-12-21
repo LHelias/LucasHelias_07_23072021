@@ -17,15 +17,3 @@ router.put("/profil/:email", auth, userCtrl.modifyUserProfile);
 router.delete("/profil/suppression", auth, userCtrl.deleteUser);
 
 module.exports = router;
-
-
-// module.exports = app => {
-//     const users = require("../controllers/user.controller.js");
-  
-//     // Create a new user
-//     app.post("/inscription", users.create);
-
-//     // Retrieve all users
-//     app.get("/connexion", users.getAll);
-
-// };

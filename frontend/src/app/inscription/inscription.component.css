@@ -1,150 +1,149 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
-*{
-    font-family: 'Montserrat', sans-serif;
-    --primary-accent-color:#d1515a;
-    --secondary-accent-color:#091f43;
-    --background-color:#e6e6e6;
+* {
+  font-family: "Montserrat", sans-serif;
+  --primary-accent-color: #d1515a;
+  --secondary-accent-color: #091f43;
+  --background-color: #e6e6e6;
 }
 
 /* css header */
-.redbar{
-    width: 100%;
-    height: 5px;
-    background-color: var(--primary-accent-color);
+.redbar {
+  width: 100%;
+  height: 5px;
+  background-color: var(--primary-accent-color);
 }
 
-.bluebar{
-    width:100%;
-    height: 10px;
-    background-color: var(--secondary-accent-color);
+.bluebar {
+  width: 100%;
+  height: 10px;
+  background-color: var(--secondary-accent-color);
 }
 
-.btn{
-    height: 3em;
-    color: black;
+.btn {
+  height: 3em;
+  color: black;
 }
 
-button + button{
-    margin-left: 1em;
+button + button {
+  margin-left: 1em;
 }
 
 /* CSS inscription*/
 
-.form-separator{
-    width:calc(100% + 10px);
-    height: 0.08em;
-    background-color: var(--primary-accent-color);
-    overflow: visible;
-    margin-bottom: 0.5em;
+.form-separator {
+  width: calc(100% + 10px);
+  height: 0.08em;
+  background-color: var(--primary-accent-color);
+  overflow: visible;
+  margin-bottom: 0.5em;
 }
 
-.input-title-container{
-    width: fit-content;
+.input-title-container {
+  width: fit-content;
 }
 
-.thumbnail-large{
-    width: 120px;
-    height: 120px;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 1px black solid;
+.thumbnail-large {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px black solid;
 }
 
-.thumbnail-large img{
-    width:100%;
+.thumbnail-large img {
+  width: 100%;
 }
 
-.thumbnail-small{
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 1px black solid;
+.thumbnail-small {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px black solid;
 }
 
-.thumbnail-small img{
-    width:100%;
+.thumbnail-small img {
+  width: 100%;
 }
 
 [type="file"] {
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute !important;
-    white-space: nowrap;
-    width: 1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  white-space: nowrap;
+  width: 1px;
 }
 /* cache le input file */
 
-  
-[type="file"]:focus + label{
-    color: #212529;
-    background-color: #fff;
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+[type="file"]:focus + label {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 /* applique les styles form-control-focus au label du input file */
 
-.btn-red{
-    background-color: var(--primary-accent-color);
-    color: black;
+.btn-red {
+  background-color: var(--primary-accent-color);
+  color: black;
 }
 
-.btn-red:hover{
-    background-color: #8f363c;
-    color: white;
+.btn-red:hover {
+  background-color: #8f363c;
+  color: white;
 }
 
-footer{
-    background-color: var(--background-color);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+footer {
+  background-color: var(--background-color);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
-.footer-height{
-    min-height: 150px;
+.footer-height {
+  min-height: 150px;
 }
 
-#page-container{
-    position: relative;
-    min-height: 100vh;
+#page-container {
+  position: relative;
+  min-height: 100vh;
 }
 
 #content-wrap {
-    padding-bottom: calc(150px + 3em);    /* hauteur du footer */
+  padding-bottom: calc(150px + 3em); /* hauteur du footer */
 
-    /* #page-container et #content-wrap permettent d'afficher le footer à sa juste place en bas de la page */
+  /* #page-container et #content-wrap permettent d'afficher le footer à sa juste place en bas de la page */
 }
 
-.hover-blue:hover{
-    background-color: #86b7fe;
+.hover-blue:hover {
+  background-color: #86b7fe;
 }
 
-.hover-red:hover{
-    background-color: var(--primary-accent-color);
+.hover-red:hover {
+  background-color: var(--primary-accent-color);
 }
 
-.post{
-    background-color: var(--background-color);
-    padding: 1em;
-    margin-top: 1em;
+.post {
+  background-color: var(--background-color);
+  padding: 1em;
+  margin-top: 1em;
 }
 
-.post > *{
-    margin-bottom: 1em;
+.post > * {
+  margin-bottom: 1em;
 }
 
-iframe{
-    border-radius: 1em;
-    width: 100%;
-    height: 40vw;
+iframe {
+  border-radius: 1em;
+  width: 100%;
+  height: 40vw;
 }
 
-.textbox{
-    background-color: white;
+.textbox {
+  background-color: white;
 }

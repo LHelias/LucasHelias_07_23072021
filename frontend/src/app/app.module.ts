@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
 import { FormsModule } from '@angular/forms';
 import { NouveauPostComponent } from './nouveau-post/nouveau-post.component';
@@ -17,13 +17,12 @@ import { DeletePostModalComponent } from './delete-post-modal/delete-post-modal.
 import { EditPostModalComponent } from './edit-post-modal/edit-post-modal.component';
 
 const appRoutes: Routes = [
-  { path: 'inscription', component: InscriptionComponent},
-  { path: 'connexion', component: ConnexionComponent},
-  { path: 'accueil', component: AccueilComponent},
-  { path: 'nouveau-post', component: NouveauPostComponent},
-  { path: '**', redirectTo: 'connexion'}
+  { path: 'inscription', component: InscriptionComponent },
+  { path: 'connexion', component: ConnexionComponent },
+  { path: 'accueil', component: AccueilComponent },
+  { path: 'nouveau-post', component: NouveauPostComponent },
+  { path: '**', redirectTo: 'connexion' },
 ];
-
 
 @NgModule({
   declarations: [
@@ -40,10 +39,10 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

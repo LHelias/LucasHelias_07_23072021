@@ -7,9 +7,9 @@ exports.getAllComments = (req, res, next) => {
     console.log("COUCOU");
     sql.query("SELECT * FROM comment", (error, results) => {
         if (error) {
-            res.status(500); 
-            res.send("error getAllComments: ",error);
-              
+            res.status(500);
+            res.send("error getAllComments: ", error);
+
             return;
         } else {
             res.send(results);
@@ -18,8 +18,9 @@ exports.getAllComments = (req, res, next) => {
     });
 };
 
-exports.addOneComment = (req, res, next) => {    
-    sql.query("INSERT INTO comment VALUES (CURRENT_TIMESTAMP, ?, ?, ?);", [req.body.email, req.body.post_id, req.body.textcontent] , (error,results) => {
+
+exports.addOneComment = (req, res, next) => {
+    sql.query("INSERT INTO comment VALUES (CURRENT_TIMESTAMP, ?, ?, ?);", [req.body.email, req.body.post_id, req.body.textcontent], (error, results) => {
         if (error) {
             res.status(500)
             res.send(error.message);
@@ -35,9 +36,9 @@ exports.editComment = (req, res, next) => {
     date = moment(date).format('YYYY-MM-DD HH:mm:ss');
     console.log("commentDate: ", date);
     console.log("req.body: ", req.body.textcontent);
-    let textcontent= req.body.textcontent;
+    let textcontent = req.body.textcontent;
 
-    sql.query("UPDATE comment SET textcontent = ? WHERE comment.creation_date = ? ;", [ textcontent, date], (error,results, fields) => {
+    sql.query("UPDATE comment SET textcontent = ? WHERE comment.creation_date = ? ;", [textcontent, date], (error, results, fields) => {
         if (error) {
             res.status(500)
             res.send(error.message);
@@ -52,8 +53,8 @@ exports.deleteOneComment = (req, res, next) => {
     console.log("req.query : ", req.query);
     req.query.creation_date = moment(req.query.creation_date).format('YYYY-MM-DD HH:mm:ss');
 
-    sql.query ("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.query.creation_date, req.query.postId], (error, results, fields) => {
-        if (error){
+    sql.query("DELETE FROM comment WHERE creation_date = ? AND post_id = ?;", [req.query.creation_date, req.query.postId], (error, results, fields) => {
+        if (error) {
             console.log("error: ", error);
             res.status(500).send({
                 message: error.sqlMessage
