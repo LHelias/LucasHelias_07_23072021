@@ -45,4 +45,5 @@ testem.log
 Thumbs.db
 
 db.config.js
-backend/images
+
+backend/images/
