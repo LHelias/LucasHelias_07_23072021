@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS comment (
 
 
 INSERT INTO users VALUES
-('admin@groupomania.com', '$2b$10$CqTSWKolqmLTip2v7uSUSOy/3ongrYHRaW.8fH9d4uKCTxFTK900y', 'Super', 'Admin','http://localhost:3000/images/Hammer_-_Noun_project_1306.svg_(1).png1639934827084.png')
+('admin@groupomania.com', '$2b$10$CqTSWKolqmLTip2v7uSUSOy/3ongrYHRaW.8fH9d4uKCTxFTK900y', 'Super', 'Admin','http://localhost:3000/images/Hammer_-_Noun_project_1306.svg_.png1639934827084.png')
 
 
 -- ('lulu@gmail.com', 'mdpdelulu', 'Lulu', 'Durand',''),
