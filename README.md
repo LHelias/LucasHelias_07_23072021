@@ -25,10 +25,8 @@ et y rentrer les informations de connexion USER et PASSWORD à votre base de don
 Lancer le script SQL DBGroupomania.sql se trouvant à la racine du projet.
 
 Voici un schéma des relations entre les tables de la BDD :
-<!-- [alt text](https://i.ibb.co/cX8FZJX/relations-db-groupomania.png) -->
-<p align="center">
-  <img src="https://i.ibb.co/cX8FZJX/relations-db-groupomania" width="350" title="relations BDD groupomania">
-</p>
+[RELATIONS BDD GROUPOMANIA](https://i.ibb.co/cX8FZJX/relations-db-groupomania.png)
+
 
 ## npm
 Dans le dossier racine, ouvrir le terminal et lancer :
