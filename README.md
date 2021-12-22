@@ -1,9 +1,9 @@
 # Groupomania
 
-## prérequis 
-Angular CLI
-NodeJS
-MySQL
+## prérequis
+MySQL,
+Angular CLI,
+NodeJS,
 nodemon
 
 ## configuration Base de données.
