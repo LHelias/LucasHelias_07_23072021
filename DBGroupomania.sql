@@ -1,5 +1,3 @@
-DROP DATABASE Groupomania;
-
 CREATE DATABASE IF NOT EXISTS Groupomania CHARACTER SET 'utf8';
 USE Groupomania;
 
@@ -16,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS post (
     post_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     creation_date DATETIME NOT NULL,
-    user_id VARCHAR(30) NOT NULL,
+    user_id VARCHAR(100) NOT NULL,
     textcontent MEDIUMTEXT NOT NULL,
     video_url MEDIUMTEXT ,
     CONSTRAINT FK_user_id_post FOREIGN KEY (user_id)
